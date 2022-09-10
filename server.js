@@ -11,11 +11,15 @@ app.use(express.json())
 const employeeRouter = require('./routes/employee')
 const assetRouter = require('./routes/asset')
 const jobsRouter = require('./routes/jobs')
+const LogsRouter = require('./routes/activityLog')
+const AlarmResponse = require('./routes/alarmresponse')
 
 
 app.use("/employee", employeeRouter)
 app.use("/assets", assetRouter)
 app.use("/jobs", jobsRouter)
+app.use("/logs", LogsRouter)
+app.use("/alarm", AlarmResponse)
 
 mongoose.connect(`${process.env.MONGODB_CONNECTION_URI}`, { useNewUrlParser: true })
 const db = mongoose.connection

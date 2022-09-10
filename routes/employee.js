@@ -37,6 +37,25 @@ router.get("/:id", findEmployee, (req, res) => {
 	}
 })
 
+//GET EMPLOYEE WITH IDLE STATUS
+router.get("/idle", async (req, res) => {
+	try {
+		const idleEmployees = await Employee.find({ status: 'Idle' })
+		res.json(idleEmployees)
+	} catch (err) {
+		res.json({ message: err.message })
+	}
+})
+//GET EMPLOYEE WITH ASSIGNED STATUS
+router.get("/assigned", async (req, res) => {
+	try {
+		const assignedEmployees = await Employee.find({ status: 'Assigned' })
+		res.json(assignedEmployees)
+	} catch (err) {
+		res.json({ message: err.message })
+	}
+})
+
 //CREATE EMPLOYEE
 router.post("/add-employee", async (req, res) => {
 	const employee = new Employee(req.body)
@@ -59,7 +78,7 @@ router.patch("/:id", async (req, res) => {
 })
 
 //DELETE EMPLOYEE
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", findEmployee, async (req, res) => {
 	try {
 		await res.employee.remove()
 		res.json({ message: "Employee Deleted!" })
